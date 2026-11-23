@@ -1,0 +1,160 @@
+<ion-header class="ion-no-border">
+  <nav class="navbar">
+    <div class="nav-left">
+      <span class="admin-label">ADMIN</span>
+    </div>
+    <div class="logo">HYPER RENTS</div>
+    <button class="logout-button" type="button" (click)="logout()">LOG OUT</button>
+  </nav>
+</ion-header>
+
+<ion-content class="admin-content">
+  <main class="admin-page">
+    <header class="page-heading">
+      <div>
+        <p class="eyebrow">FLEET MANAGEMENT</p>
+        <h1>VEHICLE STATUS</h1>
+      </div>
+      <div class="heading-actions">
+        <button class="add-car-button" type="button" (click)="toggleAddCarForm()">
+          {{ addCarOpen() ? 'CANCEL' : 'ADD VEHICLE' }}
+        </button>
+      </div>
+    </header>
+
+    <form class="add-car-form" *ngIf="addCarOpen()" novalidate (ngSubmit)="submitNewCar()">
+      <h2>Add a vehicle</h2>
+      <div class="add-car-fields">
+        <label>
+          Model
+          <input name="carModel" type="text" maxlength="100" required [(ngModel)]="newCarDraft.car_model" />
+        </label>
+        <label>
+          Year
+          <input name="year" type="number" min="1901" max="2155" step="1" required [(ngModel)]="newCarDraft.year" />
+        </label>
+        <label>
+          Engine
+          <input name="engine" type="text" maxlength="100" required [(ngModel)]="newCarDraft.engine" />
+        </label>
+        <label>
+          Plate number
+          <input name="plateNumber" type="text" maxlength="50" required [(ngModel)]="newCarDraft.plate_number" />
+        </label>
+        <label>
+          Seats
+          <input
+            name="seatingCapacity"
+            type="number"
+            min="1"
+            step="1"
+            required
+            [(ngModel)]="newCarDraft.seating_capacity"
+          />
+        </label>
+        <label>
+          Price per day (₱)
+          <input name="price" type="number" min="0.01" step="0.01" required [(ngModel)]="newCarDraft.price" />
+        </label>
+        <div class="photo-field">
+          <span class="photo-label">Car photo</span>
+          <div class="photo-picker">
+            <input
+              id="carPhoto"
+              class="photo-input"
+              name="carPhoto"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              [disabled]="isSavingNewCar()"
+              (change)="onCarPhotoSelected($event)"
+            />
+            <label class="choose-photo-button" for="carPhoto">Choose Photo</label>
+            <span class="photo-name">{{ selectedCarPhoto?.name || 'No photo selected' }}</span>
+          </div>
+          <img
+            *ngIf="photoPreviewUrl()"
+            class="photo-preview"
+            [src]="photoPreviewUrl()"
+            alt="Selected car photo preview"
+          />
+          <p *ngIf="photoError()" class="photo-error" role="alert">{{ photoError() }}</p>
+        </div>
+      </div>
+      <button class="submit-car-button" type="submit" [disabled]="isSavingNewCar()">
+        {{ isSavingNewCar() ? 'SAVING...' : 'SAVE VEHICLE' }}
+      </button>
+    </form>
+
+    <p class="loading-message" *ngIf="isLoading()">Loading vehicles...</p>
+    <p class="error-message" role="alert" *ngIf="!isLoading() && errorMessage()">{{ errorMessage() }}</p>
+    <p class="empty-message" *ngIf="!isLoading() && !errorMessage() && cars().length === 0">No vehicles found.</p>
+
+    <section class="car-grid" *ngIf="!isLoading() && cars().length">
+      <article class="car-card" *ngFor="let car of cars()">
+        <h2>{{ car.car_model }}</h2>
+        <img class="car-image" [src]="carPhotoUrl(car.image_url)" [alt]="car.car_model" />
+        <div class="spec-list">
+          <div><strong>YEAR</strong><span>{{ car.year }}</span></div>
+          <div><strong>ENGINE</strong><span>{{ car.engine }}</span></div>
+          <div><strong>PLATE NUMBER</strong><span>{{ car.plate_number }}</span></div>
+          <div><strong>SEATING CAPACITY</strong><span>{{ car.seating_capacity }}</span></div>
+          <div class="price-row">
+            <strong>PRICE</strong>
+            <div class="price-editor">
+              <span aria-hidden="true">₱</span>
+              <label class="sr-only" [for]="'vehicle-price-' + car.id">Price for {{ car.car_model }}</label>
+              <input
+                [id]="'vehicle-price-' + car.id"
+                type="number"
+                min="0.01"
+                step="0.01"
+                [ngModel]="priceDrafts()[car.id] !== undefined ? priceDrafts()[car.id] : car.price"
+                [disabled]="updatingCarId() !== null"
+                (ngModelChange)="setPriceDraft(car.id, $event)"
+              />
+              <button
+                type="button"
+                [disabled]="!hasPriceChanged(car) || updatingCarId() !== null"
+                (click)="savePrice(car)"
+              >
+                SAVE
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="status-editor">
+          <span *ngIf="car.status === 'Rented'; else editableStatus" class="status-chip status-rented" role="status"
+            >RENTED</span
+          >
+          <ng-template #editableStatus>
+            <label class="sr-only" [for]="'vehicle-status-' + car.id">Status for {{ car.car_model }}</label>
+            <select
+              [id]="'vehicle-status-' + car.id"
+              [ngModel]="car.status"
+              [disabled]="updatingCarId() !== null"
+              [class.status-available]="car.status === 'Available'"
+              [class.status-maintenance]="car.status === 'Maintenance'"
+              (ngModelChange)="updateStatus(car, $event)"
+            >
+              <option value="Available">AVAILABLE</option>
+              <option value="Maintenance">MAINTENANCE</option>
+            </select>
+          </ng-template>
+          <span class="saving-message" *ngIf="updatingCarId() === car.id">SAVING...</span>
+
+          <button
+            *ngIf="car.status === 'Maintenance'"
+            class="remove-button"
+            type="button"
+            (click)="deleteCar(car)"
+            [disabled]="updatingCarId() !== null"
+            aria-label="Remove {{ car.car_model }}"
+          >
+            REMOVE
+          </button>
+        </div>
+      </article>
+    </section>
+  </main>
+</ion-content>

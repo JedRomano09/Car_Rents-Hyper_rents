@@ -1,0 +1,626 @@
+:host {
+  display: block;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+}
+
+.profile-header {
+  --background: #000;
+  background: #000;
+}
+
+.navbar {
+  align-items: center;
+  background: #000;
+  box-sizing: border-box;
+  display: flex;
+  height: 80px;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+  width: 100%;
+}
+
+.nav-left {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: 20px;
+}
+
+.nav-left a,
+.logo {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-left a {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+  left: 50%;
+  letter-spacing: 1px;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.nav-right {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  color: #fff;
+  font-size: 24px;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.header-icon-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  min-width: 32px;
+  padding: 0;
+  text-decoration: none;
+  width: 32px;
+}
+
+.hamburger-icon,
+.profile-icon {
+  cursor: pointer;
+  font-size: 28px;
+  min-height: 32px;
+  min-width: 32px;
+}
+
+.header-icon-button ion-icon {
+  display: block;
+}
+
+.mobile-menu {
+  background: #111;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.24);
+  box-sizing: border-box;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: calc(100vw - 24px);
+  padding: 8px 18px 24px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 280px;
+  z-index: 1000;
+}
+
+.mobile-menu .close-menu {
+  align-items: center;
+  align-self: flex-end;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  height: 42px;
+  justify-content: center;
+  margin: 0 -8px 0 0;
+  padding: 0;
+  width: 36px;
+}
+
+.mobile-menu .close-menu ion-icon {
+  font-size: 22px;
+}
+
+.mobile-menu > a,
+.mobile-menu .menu-logout {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #444;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 16px;
+  min-height: 50px;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.mobile-menu > a:hover,
+.mobile-menu .menu-logout:hover {
+  color: #bdbdbd;
+}
+
+.profile-content {
+  --background: #ededed;
+}
+
+.profile-main {
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 32px 24px;
+}
+
+.dashboard {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1264px;
+  min-height: 622px;
+  padding: 32px;
+}
+
+.dashboard-header {
+  align-items: center;
+  border-bottom: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  display: flex;
+  height: 151px;
+  justify-content: space-between;
+  min-height: 151px;
+  padding-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  color: #303030;
+  font-size: clamp(26px, 2.2vw, 36px);
+  font-weight: 700;
+  margin: 0;
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+}
+
+.stat-card {
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 127px;
+  justify-content: center;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  width: 168px;
+}
+
+@media (hover: hover) {
+  .stat-card:hover {
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+  }
+}
+
+.stat-card ion-icon {
+  color: #f23b12;
+  font-size: 25px;
+  margin-bottom: 8px;
+}
+
+.stat-card strong {
+  color: #080808;
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.stat-card span {
+  color: #111;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.rentals-section {
+  flex: 1;
+  min-height: 0;
+  padding-top: 32px;
+}
+
+.rentals-section h2 {
+  align-items: center;
+  color: #080808;
+  display: flex;
+  font-size: 24px;
+  font-weight: 700;
+  gap: 8px;
+  margin: 0;
+}
+
+.rentals-section h2 ion-icon {
+  font-size: 25px;
+}
+
+.empty-state {
+  align-items: center;
+  color: #444;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 245px;
+  text-align: center;
+}
+
+.empty-state > ion-icon {
+  color: #dedede;
+  font-size: 52px;
+  margin-bottom: 24px;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.loading-message,
+.error-message {
+  color: #444;
+  margin: 40px 0;
+  text-align: center;
+}
+
+.error-message {
+  color: #b42318;
+}
+
+.retry-button {
+  background: transparent;
+  border: 0;
+  color: #111;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  margin-left: 8px;
+  text-decoration: underline;
+}
+
+.rental-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.rental-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+@media (hover: hover) {
+  .rental-card:hover {
+    animation: rental-card-float 1.2s ease-in-out infinite alternate;
+    border-color: rgba(242, 59, 18, 0.38);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+  }
+
+  .rental-card:hover .rental-image img {
+    transform: scale(1.06);
+  }
+
+  .rental-card:hover .return-button,
+  .return-button:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+}
+
+.return-button {
+  align-items: center;
+  background: #ff3d00;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  transform: scale(0.75);
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  width: 40px;
+  z-index: 2;
+}
+
+.return-button ion-icon {
+  font-size: 21px;
+}
+
+.return-button:hover {
+  background: #d93300;
+}
+
+.return-button:focus-visible {
+  opacity: 1;
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+@media (hover: none) {
+  .return-button {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+}
+
+.rental-card:active {
+  animation: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px) scale(0.985);
+}
+
+@keyframes rental-card-float {
+  from {
+    transform: translateY(-5px) scale(1.012);
+  }
+
+  to {
+    transform: translateY(-10px) scale(1.018);
+  }
+}
+
+.rental-image {
+  align-items: center;
+  aspect-ratio: 1.65;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.rental-image img {
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+  transition: transform 0.35s ease;
+  width: 100%;
+}
+
+.rental-info {
+  padding: 16px 18px 18px;
+}
+
+.rental-info h3 {
+  color: #111;
+  font-size: 19px;
+  margin: 0 0 10px;
+}
+
+.rental-summary,
+.rental-dates {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rental-summary {
+  margin-bottom: 10px;
+}
+
+.rental-summary > span,
+.rental-dates > span:first-child,
+.rental-info p {
+  color: #666;
+}
+
+.rental-info p {
+  margin: 8px 0 0;
+  font-size: 13px;
+}
+
+.rental-order-time {
+  color: #888 !important;
+  font-size: 12px !important;
+}
+
+.rental-status {
+  background: #f1f1f1;
+  border-radius: 20px;
+  color: #333;
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.rental-status[data-status='Approved'] {
+  background: #e8f6ec;
+  color: #247a38;
+}
+
+.rental-status[data-status='Active'] {
+  background: #e8f6ec;
+  color: #247a38;
+}
+
+.rental-status[data-status='Cancelled'] {
+  background: #fcebea;
+  color: #b42318;
+}
+
+.rental-price {
+  color: #f23b12;
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+}
+
+.dashboard-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.logout-button {
+  align-items: center;
+  background: #000;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  gap: 5px;
+  justify-content: center;
+  min-height: 50px;
+  min-width: 119px;
+  padding: 0 18px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.logout-button ion-icon {
+  font-size: 17px;
+}
+
+.logout-button:hover {
+  background: #252525;
+}
+
+.logout-button:active {
+  transform: scale(0.98);
+}
+
+.logout-button:focus-visible,
+.retry-button:focus-visible,
+.nav-left a:focus-visible,
+.logo:focus-visible,
+.mobile-menu a:focus-visible,
+.mobile-menu button:focus-visible,
+.header-icon-button:focus-visible {
+  outline: 2px solid #ed3b19;
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .profile-main {
+    padding: 18px 12px;
+  }
+
+  .dashboard {
+    border-radius: 12px;
+    min-height: calc(100vh - 94px);
+    padding: 22px 18px;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 22px;
+    height: auto;
+    min-height: auto;
+    padding-bottom: 22px;
+  }
+
+  .stats {
+    gap: 12px;
+    width: 100%;
+  }
+
+  .stat-card {
+    flex: 1;
+    height: 112px;
+    width: auto;
+  }
+
+  .rentals-section {
+    padding-top: 24px;
+  }
+
+  .rentals-section h2 {
+    font-size: 21px;
+  }
+
+  .empty-state {
+    min-height: 220px;
+  }
+
+  .empty-state p {
+    font-size: 14px;
+  }
+
+  .rental-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .rental-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rental-card,
+  .rental-image img,
+  .return-button {
+    transition: none;
+  }
+
+  .rental-card:hover {
+    animation: none;
+  }
+
+  .rental-card:hover,
+  .rental-card:active {
+    animation: none;
+    transform: none;
+  }
+
+  .rental-card:hover .rental-image img {
+    transform: none;
+  }
+
+  .return-button {
+    transform: none;
+  }
+}

@@ -1,0 +1,138 @@
+<ion-content class="rent-content">
+  <main class="rent-page" *ngIf="selectedCar as car; else noCarSelected">
+    <a class="back-link" routerLink="/vehicles">BACK TO VEHICLES</a>
+
+    <div class="vehicle-layout">
+      <div class="vehicle-image">
+        <img *ngIf="car.img; else noImage" [src]="car.img" [alt]="car.name" />
+        <ng-template #noImage>
+          <div class="image-placeholder">Vehicle image unavailable</div>
+        </ng-template>
+      </div>
+
+      <section class="vehicle-details">
+        <header class="vehicle-heading">
+          <h1>{{ car.name }}</h1>
+          <p>{{ car.year || 'Year not available' }} Model</p>
+        </header>
+
+        <div class="spec-grid">
+          <div class="spec">
+            <span>ENGINE</span>
+            <strong>{{ car.engine || 'Not specified' }}</strong>
+          </div>
+          <div class="spec">
+            <span>PLATE NUMBER</span>
+            <strong>{{ car.plate_number || 'Not specified' }}</strong>
+          </div>
+          <div class="spec">
+            <span>SEATING CAPACITY</span>
+            <strong>{{ car.seating_capacity ?? 'Not specified' }}{{ car.seating_capacity ? ' Seats' : '' }}</strong>
+          </div>
+          <div class="spec">
+            <span>STATUS</span>
+            <strong>{{ car.status }}</strong>
+          </div>
+        </div>
+
+        <section class="vehicle-summary">
+          <h2>Vehicle Details</h2>
+          <p>Review the selected vehicle's specifications and rental price before submitting your request.</p>
+        </section>
+
+        <section class="rental-panel">
+          <h2>Rental Details</h2>
+          <label for="rental-days">Number of Days:</label>
+          <input
+            id="rental-days"
+            name="rentalDays"
+            type="number"
+            min="1"
+            [max]="maxRentalDays"
+            step="1"
+            [(ngModel)]="rentalDays"
+          />
+          <p class="rental-message" *ngIf="rentalDays > maxRentalDays">
+            Rental duration cannot exceed {{ maxRentalDays }} days.
+          </p>
+
+          <section class="customer-information" aria-labelledby="customer-information-heading">
+            <h2 id="customer-information-heading">Renter Information</h2>
+            <label for="customer-location">Location:</label>
+            <input
+              id="customer-location"
+              name="customerLocation"
+              type="text"
+              maxlength="255"
+              autocomplete="street-address"
+              placeholder="Enter your current location"
+              [(ngModel)]="customerLocation"
+              required
+            />
+
+            <label for="valid-id-image">Upload a valid ID:</label>
+            <div class="id-photo-field">
+              <div class="photo-picker">
+                <input
+                  id="valid-id-image"
+                  class="photo-input"
+                  name="validIdImage"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  (change)="onValidIdImageChange($event)"
+                  required
+                />
+                <label class="choose-photo-button" for="valid-id-image">Choose Photo</label>
+                <span class="photo-name">{{ validIdImage?.name || 'No photo selected' }}</span>
+              </div>
+              <img
+                *ngIf="validIdImagePreviewUrl"
+                class="photo-preview"
+                [src]="validIdImagePreviewUrl"
+                alt="Selected valid ID preview"
+              />
+              <p class="rental-message">Accepted formats: JPEG, PNG, or WebP. Maximum file size: 5 MB.</p>
+              <p class="rental-message photo-error" role="alert" *ngIf="validIdImageError">{{ validIdImageError }}</p>
+            </div>
+          </section>
+
+          <div class="price-summary">
+            <div class="price-row">
+              <span>Daily Rate:</span>
+              <strong>{{ car.price !== null ? ('₱' + (car.price | number)) : 'Not set' }}</strong>
+            </div>
+            <div class="price-row">
+              <span>Estimated Total:</span>
+              <strong>{{ car.price !== null && hasValidRentalDays ? ('₱' + (estimatedTotal | number)) : '—' }}</strong>
+            </div>
+            <div class="total-row">
+              <span>Total Amount:</span>
+              <strong>{{ car.price !== null && hasValidRentalDays ? ('₱' + (estimatedTotal | number)) : '—' }}</strong>
+            </div>
+          </div>
+
+          <p class="rental-message" *ngIf="car.price === null">
+            Rental pricing is not configured for this vehicle yet.
+          </p>
+          <p class="rental-message" *ngIf="car.price !== null && car.status !== 'Available'">
+            This vehicle is not currently available.
+          </p>
+          <p class="rental-message" *ngIf="!customerId">Log in to submit a rental request.</p>
+          <p class="rental-message" *ngIf="rentalBlocker">{{ rentalBlocker }}</p>
+
+          <button class="confirm-button" type="button" [disabled]="isSubmitting" (click)="confirmRental()">
+            {{ isSubmitting ? 'SUBMITTING...' : 'CONFIRM RENTAL' }}
+          </button>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <ng-template #noCarSelected>
+    <main class="empty-state">
+      <h1>No vehicle selected</h1>
+      <p>Choose a vehicle from the Vehicles page to view its rental details.</p>
+      <a routerLink="/vehicles">BROWSE VEHICLES</a>
+    </main>
+  </ng-template>
+</ion-content>

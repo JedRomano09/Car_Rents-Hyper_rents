@@ -1,0 +1,52 @@
+<ion-content class="signup-content">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="assets/bg-video.mp4" type="video/mp4" />
+  </video>
+
+  <div class="login-wrapper">
+    <h1 class="app-title">Hyper Rents</h1>
+    <div class="Signup-box overlay-border">
+      <h2>Sign Up</h2>
+
+      <form (ngSubmit)="onSignup()" novalidate>
+        <ion-list lines="none" class="input-list">
+          <ion-item class="custom-input">
+            <ion-input
+              type="text"
+              name="username"
+              [(ngModel)]="username"
+              placeholder="Username"
+              maxlength="64"
+              class="rounded-input"
+              required
+            >
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="custom-input">
+            <ion-input type="email" name="email" [(ngModel)]="email" placeholder="Email" class="rounded-input" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="custom-input">
+            <ion-input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Password"
+              class="rounded-input"
+              required
+            >
+            </ion-input>
+          </ion-item>
+        </ion-list>
+
+        <ion-button expand="block" class="signup-btn" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'CREATING ACCOUNT...' : 'CREATE ACCOUNT' }}
+        </ion-button>
+      </form>
+
+      <p class="signup-text">Already have an account? <a routerLink="/login" replaceUrl="true">Log in here</a></p>
+    </div>
+  </div>
+</ion-content>

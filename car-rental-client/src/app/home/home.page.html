@@ -1,0 +1,114 @@
+<ion-header class="ion-no-border">
+  <div class="navbar">
+    <div class="nav-left desktop-only">
+      <a (click)="scrollToSection('home-section')">HOME</a>
+    </div>
+
+    <div class="logo">HYPER RENTS</div>
+
+    <div class="nav-right">
+      <ion-icon name="menu-outline" class="hamburger-icon mobile-only" (click)="toggleMenu()"></ion-icon>
+      <ion-icon name="person-circle-outline" class="profile-icon" (click)="navigateTo('profile')"></ion-icon>
+    </div>
+  </div>
+</ion-header>
+
+<div class="mobile-menu" *ngIf="isMenuOpen">
+  <div class="close-menu" (click)="toggleMenu()">
+    <ion-icon name="close-outline"></ion-icon>
+  </div>
+  <a routerLink="/profile" replaceUrl="true" (click)="toggleMenu()">PROFILE</a>
+  <a (click)="scrollToSection('home-section'); toggleMenu()">HOME</a>
+  <a (click)="navigateTo('vehicles'); toggleMenu()">VEHICLES</a>
+  <a (click)="scrollToSection('contact'); toggleMenu()">CONTACT US</a>
+  
+  <a (click)="logout(); toggleMenu()">LOG OUT</a>
+</div>
+
+<ion-content class="main-content">
+
+  <section id="home-section" class="page-section">
+    <div class="main-banner">
+      <img src="assets/icon/AE86.jpg" alt="ICONIC AE86">
+      <div class="banner-content">
+        <h2>ICONIC AE86</h2>
+        <p>HYPE THE RIDE MAKE IT MEMORABLE</p>
+        <div class="japanese-text">水素エンジノ（総務）</div>
+        <ion-button class="rent-button" (click)="navigateTo('vehicles')">
+          RENT NOW
+        </ion-button>
+      </div>
+      <div class="bottom-text">
+        © 2026 Hyper Rents. All rights reserved.
+      </div>
+    </div>
+
+<div class="gallery-slider">
+  <div class="slides">
+    <img src="assets/icon/BMW 135i.png" class="active">
+    <img src="assets/icon/BMW I8.png">
+    <img src="assets/icon/CHEVROLLETE CORVET-C8.png">
+    <img src="assets/icon/MERCEDEZ-BENZ-Z-G63.png">
+    <img src="assets/icon/MCLAREN-720S-SPIDER.png">
+    <img src="assets/icon/FORD BRONCO.png">
+    <img src="assets/icon/LAMBORGHINI-URUS.png">
+    <img src="assets/icon/lambo.png">
+    <img src="assets/icon/LAND CRUISER.png">
+    <img src="assets/icon/LEXUS LX600.png">
+    <img src="assets/icon/MITSUBISHI LANCER GT.png">
+    <img src="assets/icon/MAZDA MX-5.png">
+    <img src="assets/icon/SUBARU STI.png">
+    <img src="assets/icon/SUZUKI-G-MINI.png">
+    <img src="assets/icon/GTR_33.png">
+    <img src="assets/icon/lambi.jpg">
+  </div>
+
+  <button class="slider-btn prev" (click)="prevSlide()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </button>
+  <button class="slider-btn next" (click)="nextSlide()">
+    <ion-icon name="chevron-forward-outline"></ion-icon>
+  </button>
+</div>
+
+    <h2 class="section-title" style="color: black; font-weight: bold; ">SHOWCASES</h2>
+    <div class="car-grid">
+      <div class="car-card" *ngFor="let showcase of showcases">
+        <h3>{{ showcase.name }}</h3>
+        <img class="car" [src]="showcase.img" [alt]="showcase.name">
+        <div class="specs">
+          <div class="bold">YEAR</div>
+          <div>{{ showcase.year }}</div>
+          <div><img class="flag" [src]="showcase.flag" alt="Flag"></div>
+          <div>{{ showcase.country }}</div>
+          <div class="bold">Engine</div>
+          <div>{{ showcase.engine }}</div>
+          <div class="bold">0-100 KM/h</div>
+          <div>{{ showcase.accel }}</div>
+          <div class="bold">Power</div>
+          <div>{{ showcase.hp }}</div>
+          <div class="bold">Top Speed</div>
+          <div>{{ showcase.topSpeed }}</div>
+          <div class="bold">Torque</div>
+          <div>{{ showcase.torque }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <footer class="footer" id="contact">
+    <div class="container">
+      <h2 style="font-weight: bold;">TURN HEADS. LEAVE A MARK</h2>
+      <p style="font-weight: bold;"><strong>CONTACT US</strong></p>
+      <p style="font-weight: bold;">PHONE: 0999-123-4567</p>
+      <p style="font-weight: bold;">EMAIL: HYPERENTS@GMAIL.COM</p>
+      <p style="font-weight: bold;">FACEBOOK: HYPERENTS</p>
+      <p style="font-weight: bold;">PHONE: 0999-123-4567</p>
+      <p style="font-weight: bold;">INSTAGRAM: .HYPERRENTS</p>
+      <p style="font-weight: bold;">LOCATION: NEW YORK</p>
+      <p class="copyright">© 2026 Hyper Rents. All rights reserved.</p>
+    </div>
+  </footer>
+
+</ion-content>

@@ -1,0 +1,114 @@
+<ion-header class="profile-header ion-no-border">
+  <div class="navbar">
+    <nav class="nav-left desktop-only" aria-label="Main navigation">
+      <a routerLink="/home" replaceUrl="true">HOME</a>
+    </nav>
+    <a class="logo" routerLink="/home">HYPER RENTS</a>
+    <div class="nav-right">
+      <button
+        class="header-icon-button mobile-only"
+        type="button"
+        aria-label="Open navigation menu"
+        [attr.aria-expanded]="isMenuOpen"
+        (click)="toggleMenu()"
+      >
+        <ion-icon name="menu-outline" class="hamburger-icon" aria-hidden="true"></ion-icon>
+      </button>
+      <a class="header-icon-button" routerLink="/profile" aria-label="Open profile" aria-current="page">
+        <ion-icon name="person-circle-outline" class="profile-icon" aria-hidden="true"></ion-icon>
+      </a>
+    </div>
+  </div>
+</ion-header>
+
+<nav class="mobile-menu" *ngIf="isMenuOpen" aria-label="Mobile navigation">
+  <button class="close-menu" type="button" aria-label="Close navigation menu" (click)="toggleMenu()">
+    <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+  </button>
+  <a routerLink="/profile" aria-current="page" (click)="toggleMenu()">PROFILE</a>
+  <a routerLink="/home" (click)="toggleMenu()">HOME</a>
+  <a routerLink="/vehicles" (click)="toggleMenu()">VEHICLES</a>
+  <button type="button" class="menu-logout" (click)="logout()">LOG OUT</button>
+</nav>
+
+<ion-content class="profile-content">
+  <main class="profile-main">
+    <section class="dashboard" aria-labelledby="welcome-heading">
+      <div class="dashboard-header">
+        <h1 id="welcome-heading">Welcome, {{ displayName }}</h1>
+
+        <div class="stats" aria-label="Rental statistics">
+          <div class="stat-card">
+            <ion-icon name="car-outline" aria-hidden="true"></ion-icon>
+            <strong>{{ rentals.length }}</strong>
+            <span>Total Rentals</span>
+          </div>
+          <div class="stat-card">
+            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+            <strong>{{ activeRentals }}</strong>
+            <span>Active</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="rentals-section" aria-labelledby="rentals-heading">
+        <h2 id="rentals-heading">
+          Your Rentals
+          <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+        </h2>
+
+        <p class="loading-message" *ngIf="isLoading">Loading your rentals...</p>
+
+        <div class="empty-state" *ngIf="!isLoading && !errorMessage && rentals.length === 0">
+          <ion-icon name="car-outline" aria-hidden="true"></ion-icon>
+          <h3>No rentals yet</h3>
+          <p>Start your adventure by renting your dream car</p>
+        </div>
+
+        <p class="error-message" role="alert" *ngIf="!isLoading && errorMessage">
+          {{ errorMessage }}
+          <button type="button" class="retry-button" (click)="loadRentals()">Try again</button>
+        </p>
+
+        <div class="rental-list" *ngIf="!isLoading && !errorMessage && rentals.length > 0">
+          <article class="rental-card" *ngFor="let rental of rentals">
+            <button
+              *ngIf="isReturnable(rental)"
+              class="return-button"
+              type="button"
+              [attr.aria-label]="'Return ' + rental.carName"
+              (click)="confirmReturn(rental)"
+            >
+              <ion-icon name="arrow-undo-outline" aria-hidden="true"></ion-icon>
+            </button>
+            <div class="rental-image">
+              <img [src]="rental.carImage" [alt]="rental.carName" loading="lazy" />
+            </div>
+            <div class="rental-info">
+              <h3>{{ rental.carName }}</h3>
+              <div class="rental-summary">
+                <span>{{ rental.rentalDays }} day(s)</span>
+                <strong class="rental-price">{{ rental.total_price | currency: 'PHP' : 'symbol' : '1.2-2' }}</strong>
+              </div>
+              <div class="rental-dates">
+                <span>Rented: {{ rental.start_date | date: 'MM/dd/yyyy' }}</span>
+                <span class="rental-status" [attr.data-status]="rental.displayStatus">{{ rental.displayStatus }}</span>
+              </div>
+              <p>Due: {{ rental.end_date | date: 'MM/dd/yyyy' }}</p>
+              <p class="rental-order-time" *ngIf="rental.created_at">
+                Ordered: {{ rental.created_at | date: 'short' }}
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="dashboard-actions">
+        <button type="button" class="logout-button" (click)="logout()">
+          <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+          LOG OUT
+        </button>
+      </div>
+    </section>
+  </main>
+</ion-content>

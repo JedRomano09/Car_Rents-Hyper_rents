@@ -1,0 +1,48 @@
+<ion-content class="forgetpass-content">
+
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="assets/bg-video.mp4" type="video/mp4" />
+  </video>
+
+
+  <div class="forgetpass-wrapper">
+    <h1 class="app-title">Hyper Rents</h1>
+    <div class="Signup-box overlay-border">
+      <h2>Request To Admin</h2>
+
+      <form (ngSubmit)="onResetPassword()" novalidate>
+        <ion-list lines="none" class="input-list">
+
+          <ion-item class="custom-input">
+            <ion-input 
+              type="email" 
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Enter your email" 
+              class="rounded-input"
+              required>
+            </ion-input>
+          </ion-item>
+
+
+          <ion-item class="custom-input">
+            <ion-input 
+              type="password" 
+              name="newPassword"
+              [(ngModel)]="newPassword"
+              placeholder="Enter new password" 
+              class="rounded-input"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-list>
+
+        <ion-button expand="block" class="signup-btn" type="submit">
+          Update Password
+        </ion-button>
+      </form>
+
+      <p class="signup-text">Remember your password? <a routerLink="/login" replaceUrl="true">Log in here</a></p>
+    </div>
+  </div>
+</ion-content>

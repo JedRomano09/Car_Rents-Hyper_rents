@@ -1,0 +1,54 @@
+<ion-content class="login-content">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="assets/bg-video.mp4" type="video/mp4">
+  </video>
+
+  <div class="login-wrapper">
+    <h1 class="app-title">Hyper Rents</h1>
+
+    <div class="login-box overlay-border">
+      <h2>Log In</h2>
+
+      <form (ngSubmit)="onLogin()" novalidate>
+        <ion-list lines="none" class="input-list">
+          <ion-item class="custom-input">
+            <ion-input
+              type="text"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Email or Username"
+              aria-label="Email or Username"
+              autocomplete="username"
+              class="rounded-input"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="custom-input">
+            <ion-input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Password"
+              aria-label="Password"
+              autocomplete="current-password"
+              class="rounded-input"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-list>
+
+        <ion-button
+          expand="block"
+          class="login-btn"
+          type="submit"
+          [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Logging in...' : 'Log In' }}
+        </ion-button>
+      </form>
+
+      <p><a routerLink="/forgetpass" replaceUrl="true">Forgot Password?</a></p>
+      <p class="signup-text">Don't have an account? <a routerLink="/signup" replaceUrl="true">Sign up here</a></p>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,114 @@
+
+ion-content.login-content {
+  --background: transparent;
+  position: relative;
+  height: 100%;
+}
+
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.app-title {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.login-box {
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+
+  h2 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 25px;
+  }
+}
+
+
+.input-list {
+  background: transparent !important;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.custom-input {
+  --background: transparent;
+  --inner-padding-end: 0;
+  --padding-start: 0;
+  margin-bottom: 15px;
+}
+
+.rounded-input {
+  --background: #ffffff;
+  --color: #000000;
+  --placeholder-color: #666666;
+  --placeholder-opacity: 1;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  border-radius: 25px;
+  height: 48px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.login-btn {
+  --background: #ffffff;
+  --color: #000000;
+  --border-radius: 25px;
+  --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  height: 48px;
+  margin-top: 15px;
+  text-transform: none;
+
+  &:hover {
+    --background: #e0e0e0;
+  }
+}
+
+
+.signup-text {
+  color: #ffffff;
+  font-size: 14px;
+  margin-top: 20px;
+
+  a {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}

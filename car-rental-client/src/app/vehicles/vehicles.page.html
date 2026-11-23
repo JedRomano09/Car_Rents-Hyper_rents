@@ -1,0 +1,159 @@
+<ion-header class="ion-no-border">
+  <div class="navbar">
+    <div class="nav-left desktop-only">
+      <a routerLink="/home" replaceUrl="true">HOME</a>
+    </div>
+
+    <div class="logo">HYPER RENTS</div>
+
+    <div class="nav-right">
+      <ion-icon name="menu-outline" class="hamburger-icon mobile-only" (click)="toggleMenu()"></ion-icon>
+      <ion-icon name="person-circle-outline" class="profile-icon" (click)="navigateTo('profile')"></ion-icon>
+    </div>
+  </div>
+</ion-header>
+
+<div class="mobile-menu" *ngIf="isMenuOpen">
+  <div class="close-menu" (click)="toggleMenu()">
+    <ion-icon name="close-outline"></ion-icon>
+  </div>
+  <a routerLink="/profile" replaceUrl="true" (click)="toggleMenu()">PROFILE</a>
+  <a routerLink="/home" replaceUrl="true" (click)="toggleMenu()">HOME</a>
+  <a routerLink="/vehicles" replaceUrl="true" (click)="toggleMenu()">VEHICLES</a>
+  <a (click)="scrollToSection('contact'); toggleMenu()">CONTACT US</a>
+  <a (click)="logout(); toggleMenu()">LOG OUT</a>
+</div>
+
+<ion-content class="main-content">
+
+  <section id="vehicles-section" class="page-section">
+    <h2 class="section-title">AVAILABLE CARS</h2>
+    
+    <div class="dropdown-filters">
+      <div class="dropdown-filter">
+        <button class="filter-btn" (click)="toggleDropdown('make-dropdown')">
+          <span id="make-label">{{ selectedMakeLabel }}</span>
+        </button>
+        <div class="filter-dropdown" id="make-dropdown" [class.show]="activeDropdown === 'make-dropdown'">
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('make', '', 'All Makes')">All Makes</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('make', 'toyota', 'Toyota')">Toyota</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('make', 'honda', 'Honda')">Honda</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('make', 'bmw', 'BMW')">BMW</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('make', 'audi', 'Audi')">Audi</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('make', 'mercedes', 'Mercedes')">Mercedes</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('make', 'tesla', 'Tesla')">Tesla</div>
+        </div>
+      </div>
+      
+      <div class="dropdown-filter">
+        <button class="filter-btn" (click)="toggleDropdown('seating-capacity-dropdown')">
+          <span id="seating-capacity-label">{{ selectedSeatingCapacityLabel }}</span>
+        </button>
+        <div class="filter-dropdown" id="seating-capacity-dropdown" [class.show]="activeDropdown === 'seating-capacity-dropdown'">
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('seatingCapacity', '', 'All Seating Capacities')">All Seating Capacities</div>
+          <div class="filter-option" *ngFor="let capacity of seatingCapacityOptions" (click)="selectFilter('seatingCapacity', capacity.toString(), capacity + (capacity === 1 ? ' Seat' : ' Seats'))">
+            {{ capacity }} {{ capacity === 1 ? 'Seat' : 'Seats' }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="dropdown-filter">
+        <button class="filter-btn" (click)="toggleDropdown('year-dropdown')">
+          <span id="year-label">{{ selectedYearLabel }}</span>
+        </button>
+        <div class="filter-dropdown" id="year-dropdown" [class.show]="activeDropdown === 'year-dropdown'">
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('year', '', 'All Years')">All Years</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('year', '2024', '2024')">2024</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('year', '2023', '2023')">2023</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('year', '2022', '2022')">2022</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('year', '2021', '2021')">2021</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('year', '2013', '2013')">2013</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('year', '1998', '1998')">1998</div>
+        </div>
+      </div>
+      
+      <div class="dropdown-filter">
+        <button class="filter-btn" (click)="toggleDropdown('price-dropdown')">
+          <span id="price-label">{{ selectedPriceLabel }}</span>
+        </button>
+        <div class="filter-dropdown" id="price-dropdown" [class.show]="activeDropdown === 'price-dropdown'">
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('price', '', 'All Prices')">All Prices</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('price', 'under30', 'Under ₱30k')">Under ₱30k</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('price', '30-50', '₱30k - ₱50k')">₱30k - ₱50k</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('price', '50-80', '₱50k - ₱80k')">₱50k - ₱80k</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('price', 'over80', 'Over ₱80k')">Over ₱80k</div>
+        </div>
+      </div>
+      
+      <div class="dropdown-filter">
+        <button class="filter-btn" (click)="toggleDropdown('engine-dropdown')">
+          <span id="engine-label">{{ selectedEngineLabel }}</span>
+        </button>
+        <div class="filter-dropdown" id="engine-dropdown" [class.show]="activeDropdown === 'engine-dropdown'">
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('engine', '', 'All Engines')">All Engines</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('engine', 'electric', 'Electric')">Electric</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('engine', 'hybrid', 'Hybrid')">Hybrid</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('engine', 'petrol', 'Petrol')">Petrol</div>
+          <div style="color: black; font-weight: bold;" class="filter-option" (click)="selectFilter('engine', 'diesel', 'Diesel')">Diesel</div>
+        </div>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="reset-btn" (click)="resetFilters()">Reset</button>
+        <button class="apply-btn" (click)="applyFilters()">Apply</button>
+      </div>
+    </div>
+    
+    <div class="car-grid" id="cars-container">
+      <div class="car-card" *ngFor="let car of filteredCars()"
+           [attr.data-make]="car.make" 
+           [attr.data-model]="car.model" 
+           [attr.data-year]="car.year" 
+           [attr.data-price]="car.price" 
+           [attr.data-engine]="car.engine">
+        <h3>{{ car.name }}</h3>
+        <img class="car" [src]="car.img" [alt]="car.name">
+        <div class="specs">
+          <div class="bold">YEAR</div><div>{{ car.year ?? '-' }}</div>
+          <div class="bold">ENGINE</div><div>{{ car.engine ?? '-' }}</div>
+          <div class="bold">PLATE NUMBER</div><div>{{ car.plate_number ?? '-' }}</div>
+          <div class="bold">SEATING CAPACITY</div><div>{{ car.seating_capacity ?? '-' }}</div>
+          <div class="bold">PRICE</div><div>{{ car.price != null ? ('₱' + (car.price | number)) : '-' }}</div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <span
+            class="car-status"
+            role="status"
+            [class.status-available]="car.status === 'Available'"
+            [class.status-rented]="car.status === 'Rented'"
+            [class.status-maintenance]="car.status === 'Maintenance'"
+          >{{ car.status }}</span>
+          <ion-button
+            expand="block"
+            class="rent-button-card"
+            style="flex-grow: 1;"
+            [disabled]="checkingCarId !== null"
+            (click)="navigateTo(car)"
+          >RENT NOW</ion-button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  
+  <footer class="footer" id="contact">
+    <div class="container">
+      <h2 style="font-weight: bold;">TURN HEADS. LEAVE A MARK</h2>
+      <p style="font-weight: bold;"><strong>CONTACT US</strong></p>
+      <p style="font-weight: bold;">PHONE: 0999-123-4567</p>
+      <p style="font-weight: bold;">EMAIL: HYPERENTS@GMAIL.COM</p>
+      <p style="font-weight: bold;">FACEBOOK: HYPERENTS</p>
+      <p style="font-weight: bold;">PHONE: 0999-123-4567</p>
+      <p style="font-weight: bold;">INSTAGRAM: .HYPERRENTS</p>
+      <p style="font-weight: bold;">LOCATION: NEW YORK</p>
+      <p class="copyright">© 2026 Hyper Rents. All rights reserved.</p>
+    </div>
+  </footer>s
+
+</ion-content>
